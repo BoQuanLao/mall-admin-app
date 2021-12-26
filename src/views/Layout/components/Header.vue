@@ -17,19 +17,33 @@
     </div>
     <ul class="user-info">
       <li>
-        欢迎，Guzz
+        欢迎，{{ this.$store.state.user.username }}
         <a-icon type="down" />
       </li>
-      <li>退出</li>
+      <li @click="logOut">退出</li>
     </ul>
   </header>
 </template>
 
 <script>
+// import { getUserCookie } from '@/utils/userCookie';
+
 export default {
+  // data() {
+  //   return {
+  //     username: '',
+  //   };
+  // },
+  // mounted() {
+  //   this.username = getUserCookie('username');
+  // },
   methods: {
     toggleCollapsed() {
       this.$store.dispatch('changeCollapsed');
+    },
+    logOut() {
+      this.$store.dispatch('logout');
+      this.$router.push('/login');
     },
   },
 };

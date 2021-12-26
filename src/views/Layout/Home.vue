@@ -8,7 +8,7 @@
     <!-- 主区域 -->
     <div :class="{ 'main-app': true, 'menu-unfold': $store.state.collapsed }">
       <Header />
-      <!-- <router-view></router-view> -->
+      <router-view></router-view>
     </div>
   </div>
 </template>
