@@ -75,7 +75,7 @@ export default {
           login(this.ruleForm)
             .then((res) => {
               this.$store.dispatch('setUserInfo', res);
-              this.$router.push('/');
+              this.$router.push('/index');
             })
             .catch((err) => {
               this.resetForm(formName);

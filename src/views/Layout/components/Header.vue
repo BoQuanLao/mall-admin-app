@@ -9,10 +9,10 @@
     </a-button>
     <div class="breadcrumb">
       <a-breadcrumb>
-        <a-breadcrumb-item>Home</a-breadcrumb-item>
-        <a-breadcrumb-item><a href="">Application Center</a></a-breadcrumb-item>
-        <a-breadcrumb-item><a href="">Application List</a></a-breadcrumb-item>
-        <a-breadcrumb-item>An Application</a-breadcrumb-item>
+        <a-breadcrumb-item v-for="route in currentRoutes" :key="route.name">
+          <router-link :to="route.path" > {{ route.meta.title }}</router-link>
+          </a-breadcrumb-item
+        >
       </a-breadcrumb>
     </div>
     <ul class="user-info">
@@ -20,29 +20,35 @@
         欢迎，{{ this.$store.state.user.username }}
         <a-icon type="down" />
       </li>
-      <li @click="logOut">退出</li>
+      <li @click="logout">退出</li>
     </ul>
   </header>
 </template>
 
 <script>
-// import { getUserCookie } from '@/utils/userCookie';
+import { removeAllUserCookie } from '@/utils/userCookie';
 
 export default {
-  // data() {
-  //   return {
-  //     username: '',
-  //   };
-  // },
-  // mounted() {
-  //   this.username = getUserCookie('username');
-  // },
+  data() {
+    return {
+      currentRoutes: [],
+    };
+  },
+  watch: {
+    $route: {
+      handler() {
+        this.currentRoutes = this.$router.currentRoute.matched;
+      },
+      immediate: true,
+    },
+  },
   methods: {
     toggleCollapsed() {
       this.$store.dispatch('changeCollapsed');
     },
-    logOut() {
+    logout() {
       this.$store.dispatch('logout');
+      removeAllUserCookie();
       this.$router.push('/login');
     },
   },

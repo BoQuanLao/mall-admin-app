@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     collapsed: false, // 切换菜单的闭合状态， false 代表不闭合， true 代表闭合
     user: getAllUserCookie(),
+    menuRoutes: [],
   },
   mutations: {
     changeCollapsed(state) {
@@ -26,6 +27,10 @@ export default new Vuex.Store({
         email: '',
       };
     },
+
+    setMenuRoutes(state, payload) {
+      state.menuRoutes = [...payload];
+    },
   },
   actions: {
     changeCollapsed({ commit }) {
@@ -37,8 +42,12 @@ export default new Vuex.Store({
       commit('setUserInfo', info);
     },
     logout({ commit }) {
-      commit('logout');
       removeAllUserCookie();
+      commit('logout');
+    },
+
+    setMenuRoutes({ commit }, payload) {
+      commit('setMenuRoutes', payload);
     },
   },
   modules: {
